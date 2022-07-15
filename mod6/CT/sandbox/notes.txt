@@ -1,0 +1,25 @@
+Java methods related to reading files:
+
+- character streams: use to reach 16 bit characters (unicode). Method names end with Reader/Writer
+
+- byte streams: use to read binary, or other data that is not unicode. Method names end in InputStream/OutputStream
+
+- for efficiency wrap streams in a buffer reader/writer.
+- close streams.
+- binary data means "not text". stuff like .png
+
+
+
+
+   -  BufferReader (java.io.BufferReader) reads text from a stream and is used to wrap a reader method
+        such as FileReaders and InputStreamReaders
+        Without buffering, each invocation of read() or readLine() could cause bytes
+        to be read from the file, converted into characters, and then returned, which
+        can be very inefficient.
+     
+    - InputStreamReader
+
+
+REFS:
+    Byte Stream Vs Character Stream In Java
+    https://javaconceptoftheday.com/byte-stream-vs-character-stream-in-java/

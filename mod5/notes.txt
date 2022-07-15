@@ -1,0 +1,7 @@
+IO
+<iostream> gives acces to std::cout and std::cin and the insertion operator <<, and the extraction operator >>
+
+cin needs a variable.
+
+// g++ test.cpp -o test -lpthread
+

@@ -1,0 +1,42 @@
+For the second part of your Portfolio Project, you will create a Java application that will exhibit concurrency concepts.  Your application should create two threads that will act as counters.  One thread should count up to 20.  Once thread one reaches 20, then a second thread should be used to count down to 0.  For your created code, please be provide a detailed analysis of appropriate concepts that could impact your application.  Specifically, please address:
+
+Performance issues with concurrency
+Vulnerabilities exhibited with use of strings
+Security of the data types exhibited.
+Submit the following components:
+
+Word document with appropriate screenshots of your program executing, program analysis responses, and source code in the Word file.
+Submit your .java source code file(s).  If more than 1 file, submit a zip file.
+Provide a detailed comparison between the performance implementations between the Java and C++ versions of your applications.  Which implementation may be considered less vulnerable to security threats and why? Your detailed comparison should be 3-4 pages in length and should be formatted according to the CSU Global Guide to Writing. (Links to an external site.)
+
+
+
+NOTES:
+concurrency in Java. how do i spin up and manage a thread in java?
+
+ealy computers had single processors which carried processes out in sequential order. modern puters have multiple processors so parallel programming becomes necessary
+
+
+parallel programmin means "writing a program as a set of several tasks that can be executed simultaneously." From the point of view of the programmr there is no difference between programming for parallel execution with a single or a multi processor... single processors can run separate threads.
+
+two main ways to progam a thread in java:
+first way, define a class that extends Thread, with a constructor and whatever methods it needs. then create an instance of that class and invoke the instance with start();
+
+the other way is to implement Runnable. 
+
+threads cn interrupt
+
+synchronized locks act like mutex
+
+synchronizing and voltile
+it i safe to have multiple threada acces a shared variable if that access is synchronized and all access to that resource is synchronized.
+
+synchronization prevents race conditions
+
+volatile prevents threads from caching local values and allways have to read from the main copy. 
+
+
+
+
+REFERENCES:
+https://math.hws.edu/javanotes/c12/index.html

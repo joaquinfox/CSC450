@@ -1,0 +1,25 @@
+Working with strings can lead to various security flaws and errors in software development using the C++ language. What are the common string manipulation errors that can be encountered? How can these errors be resolved and/or limited? What tips can be utilized to identify security vulnerabilities related to strings in C++?  Be sure to provide an appropriate source code example to illustrate your points.
+
+
+C++ uses two basic (and different) namespaces for approaching strings. The first is the approach inherited from the C language, of treating strings as arrays of characters, with a null value stuck on the end. As a reminder (to myself) C++ is a superset of C and implements all of the methods of the older language.(https://www.javatpoint.com/cpp-history). When approaching strings in this way, all the  methods we perform are carried out on individual character elements.
+
+The second approach to C++ has towards strings, makes use of a string class, with a toolbox of useful string methods. This conception of a string is closer to that of Java, and the available methods are similar.
+
+Why would one use a character array as opposed to the string class? The only argument I found for this, is that charater arrays can be faster (https://www.geeksforgeeks.org/stdstring-class-in-c/). On the other hand, character arrays  have the disadvantage of being statically sized, wasteful of space, and in my opinion, tedious to work with. This weeks chapter in Structured Programming in C++ (chapter 5) focussed entirely on character arrays, and does not even mention the string class.
+
+Both approaches come with security concerns. Before I get into that though, let me clear up something that has confused me, as to the meaning of security. The word is used to describe very different things, namely the privacy of data, the integrity of data, and the stability of the program(https://www.cse.psu.edu/~trj1/cse544-s10/papers/gasser_ch1-2.pdf). I think of these as "stealing stuff" vs. "changing stuff" vs "breaking stuff". The security issues described in chapter 6 of SEI CERT are mostly of the "breaking stuff" sort. It is hard to see, for eample, how a buffer overflow could be used to do more than crash a program. If you have a different take on this, please let me know.
+
+Also, you may have found like I did, that many of the "non compliant" code samples in chapter 6 compile and execute just fine, which is of course why they are hard to spot and so problematic. This begs the question of whether C++ is not just fundamentally flawed from a security standpoint. Shouldn't the compiler run some defense for us? Let me know your thoughts.
+
+Onto specific vulnerabilities.
+
+Character arrays, being statically sized, might not be big enough to store
+
+
+
+
+ each with it's own funcitonality and syntax. The first is a legacy framework from the C language, it is older, character based. This means that strings are collections of characters, and all the methods one can performs act on the constituent characters of a string, not on the string as an aggregate. 
+
+The second idea, is that
+
+This approach is the one demonstrated in Chapter 5 of Structured Programming in C++

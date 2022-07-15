@@ -1,0 +1,120 @@
+<p>
+  Java remedies some of the shortcomings of the C langauges, in ways I think we
+  can all appreciate more fully now, having spent the past five weeks studying
+  the vulnerabilites of C. Here are the key Java security features:
+</p>
+
+<ul>
+  <li>
+    automatic memory management helps protect against memory leaks, and reduces
+    the code we have to write.
+  </li>
+  <li>
+    range checks on array operations gives us a warning so we can fix the issue
+    then and there.
+  </li>
+  <li>
+    garbage collection periodically purges data that is out of scope, so it
+    won't come back to haunt us later.
+  </li>
+  <li>
+    access modifiers give us a way of encapsulating data and name spaces, with a
+    simple, intuitive syntax.
+  </li>
+  <li>
+    the Java compiler runs a bunch of checks for us, related to all the features
+    above, and gives us helpful comments pointing us to the problem, if there is
+    one.
+  </li>
+</ul>
+<p>From the Java docs:
+<blockquote>
+    "This reduces the overall programming burden placed on developers, leading to fewer subtle programming errors and to safer, more robust code."
+</blockquote>
+
+</p>
+<p>Java is gnerally safe when considered in isolation. However, I don't know of any real world applications that use Jave exclusively: modern apps pull in a lot of dependencies. Once we incorporate Java into a more complex architecture, we intorduce 
+    attack vectors, poking holes in our security layers. An IBM document about the Java SecurityMangaer class, which acts as a permission layer that allows or disallows calls to and from certain API's,  describes the situation this way :
+<blockquote>
+	"By default, Java™ applications have no security restrictions placed on activities requested of the Java API. To use Java security to protect a Java application from performing 
+	potentially unsafe actions, you can enable a security manager for the JVM in which the application runs."
+</blockquote>
+</p>
+<p>		Each dependency and library and API call presents a new opportunity to break things. This is not special to Java, it is a feature of modern software generally, and of web applications 	in particular. Java response to this situation, is what it calls implemtation independence. From the docs ...
+<blockquote>
+	"Applications do not need to implement security themselves. Rather, they can request security services from the Java platform. Security services are implemented in providers, which are plugged into the Java platform via a standard interface."
+</blockquote>
+This approach encapsulates security measures so that we users do not have to worry (too much) about it. 
+</p>
+<p>
+    Issues of data sensitivity are most likely to surface when our application exchanges data with the outside world (which I think of as anything outside of our calling class). Java's built in tools to help in these cases include the various <em>Provider</em> objects of the java.security class, and the SecurityManager class, which acts like a filter for API calls. Providers seem to mostly be involved in hashing and encrypting sensitive data. If you need an introduction to hashing, like I did, <a href="https://www.ionos.com/digitalguide/server/security/hash-function/">here is a good one.</a>
+
+</p>
+<p>A common real world use case comes about when we need to hash (scramble) some piece of data. Here is a walkthrough for a process to do that using a provider from the java.security.library called MessageDigest. A couple points worth mentioning:
+    <ul>
+        <li>
+Each provider comes with methods. I use the getInstance() of MessageDigest to create a hash object.
+        </li>
+        <li>
+            Providers  throw an exception type NoSuchAlgorithm, which we have to throw or handle.
+
+        </li>
+        <li>Hash functions take the data you feed them and turn that data into a string. That is <em>allways the same length.</em>The length is determined by the algorithm you pass to the function.</li>
+        <li>The method digest() lets us get at the hash content of a provider.</li>
+    
+    </ul>
+ Here is the shell:
+    <pre><code>
+        import java.security.*;
+
+        class hashTest {
+            public static void main(String[] argv) {
+                int i = 10;
+                try {
+        
+                    MessageDigest firstHash = MessageDigest.getInstance("SHA-1");
+        
+                    System.out.println("This is header information for the provider: " + firstHash);
+                    System.out.println("This is the actual hash     : " + firstHash.digest());
+        
+                    byte[] myEncryptedMessage = firstHash.digest("I like cheetos".getBytes());
+        
+                    System.out.println("This is my encrypted message: " + myEncryptedMessage);
+        
+                    byte[] aDifferentEncryptedMessage = firstHash
+                            .digest("Oh yeah life goes on, just two American kids in the heartland".getBytes());
+                    System.out.println("This is a different message : " + aDifferentEncryptedMessage);
+                } catch (NoSuchAlgorithmException e) {
+                    System.out.println(e);
+                }
+        
+            }
+        }
+
+// This is the actual hash     : [B@6f496d9f
+// This is my encrypted message: [B@723279cf
+// This is a different message : [B@10f87f48
+
+    </code></pre>
+    
+ </p>
+
+
+<p>
+
+
+    
+</p>
+<p></p>
+<p></p>
+
+<p>References</p>
+<p>Java.Docs. (Accessed 4.25.2022) <em>Security Overview</em>
+&emsp; https://docs.oracle.com/javase/8/docs/technotes/guides/security/overview/jsoverview.html</p>
+
+<p>IBM.Docs. (Accessed 4.25.2022) <em>Enabling Java Security Manager</em>
+&emsp; https://docs.oracle.com/javase/8/docs/technotes/guides/security/overview/jsoverview.html</p>
+
+<p>IONOS (Accessed 4.25.2022) <em>What is a hash function?</em>
+&emsp;https://www.ionos.com/digitalguide/server/security/hash-function/</p>
+

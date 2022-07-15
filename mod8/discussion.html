@@ -1,0 +1,42 @@
+<p>
+    Guideline 42 of <em>Java Coding Guidlines</em> is <quote>"Use exceptions only for exceptional conditions."</quote>. Truly "exceptional" events are most often going to be known, named and checked events. In  general exception handling should be confined to this group and not used for runtime errors in logic.
+</p>
+<p>
+   Exception handling allows us to handle bad events "gracefully". This means that we give the program an opportunity to tidy up, protect important things, put on a seat bealt or a parachute, and send a message to our family, before the actual train wreck. Or, more accurately, we provide a mechanism to save data, close processes, and log a helpful message before the exception causes our program to exit.
+</p>
+<p>
+
+ The issue, according to Long, et al, is the "nonlocality" of a catch statement. Because it is possible to end up catching an exception far from the source, this can make it harder to trace the exception to its source, although I would think a good error message could help with this. It can also be hard to re-factor (or improve) code written in try- catch blocks for fear of breaking things.
+</p>
+<p> Best practices are to use exception handling methods for checked exceptions. Here is a <a href="https://programming.guide/java/list-of-java-exceptions.html">comprehensive list </a>of checked exceptions in Java. Another best practice is to use the most specific exception we can, and to catch that one first in a catch net.</p>
+<p>The question comes up for me,  is it ever a good idea to write a custom exception? I don't have an answer for this and would like to know what other people think. When I first learned about custom exceptions I thought they were a super power I could use to protect my code from practically <em>any</em> unforseen event. Now I am not so sure.</p>
+<p>A good use (and in fact a <em>required</em> use ) of exceptions in Java is with I/O operations. Java requires that we explicityly write a throws statement for any method that <em>could</em> throw a checked exception (Carrano, Frank & Hernry, Timothy. 2018). Here is an example from an earlier class.</p>
+<pre><code>
+    import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+class ExceptionHandlingDemo {
+
+    public static void main(String args[]) {
+
+        try {
+
+            // Following file does not exist
+            File file = new File("E://file.txt");
+
+            FileReader fr = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist");
+        }
+    }
+
+}
+</code></pre>
+<p>References</p>
+&emsp; https://docs.oracle.com/javase/8/docs/technotes/guides/security/overview/jsoverview.html</p>
+<p>Carrano, Frank & Henry, Timothy. 2019. <em>Data Structures and Abstractions with Java.</em>. Java Interlude 2, Exceptions.
+
+
+<p>Long, Fred et al.  (2014) <em>Java Coding Guidlines</em>. Chapter 3.
+

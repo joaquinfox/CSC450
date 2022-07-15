@@ -1,0 +1,40 @@
+<p>C and C++ are part of a group of programming languages that use pointers as <em>aliases</em> for values stored in memory. A pointer stores the location in memory of a value, and we can use it <em>in place of</em> that value. This provides the advantage of not having to duplicate values in memory every time we want to do something with them. Pointers are a variable type that stores addresses, and nothing else. These addresses are physical locations on a memory card and are described by a 12-digit, hexadecimal number (addresses are also referred to as <em>locations</em> or <em>references</em> ). We can think of pointers as maps to a physical location. Instead of an actual map though, the address will be the hexadecimal number that encodes a location.</p>
+<p>Since pointers only store location addresses, the following is not allowed: <code style="color: black;">string *foo = "save me!!!" // Not allowed</code>. Instead, we assign pointers to a <em>reference</em>, which is a location in memory, that holds some value of interest to us. We can do this like so:</p>
+<pre><code style="color: black;">
+        string foo = "I'm over here!!;
+        string *pointMeToFoo = &amp;foo;
+    </code></pre>
+<p>We can now pass the pointer around as an argument and it will always and forever point to the location of the variable foo. This will be true even after the value of foo is changed or destroyed, in which case the pointer will point to a null location.</p>
+<p>Pointers in C++ have two available operations: they can point to a location (reference a location) and they can grab the value at that location (de-reference the location).</p>
+<p>Among the benefits of using pointers are more efficient code, faster execution, and memory savings (Backman, Kjell). We can pass pointers to objects, instead of copies of objects, which reduces both space and time complexity. We can immediately delete those values when we are done with them, and this helps make the code fast. Even today you hear developers talk about how fast the C languages are. In part, this is due to the ability to manage memory efficiently, through pointers. It's also due to the relatively low level of the language, and its relatively small size (see Quora reference below).</p>
+<p>We can use pointers pretty much the same way we use other variable types. Here is a mix of pointer methods that helped me understand how to pass pointers as a function argument, and also how to use pointers with the string class, vs. character arrays.</p>
+<pre><code>
+  #include 
+    #include 
+    using namespace std;
+    
+    void bearSpeaks(char *str)
+    {
+        cout &lt;&lt; " eats " &lt;&lt; str &lt;&lt; endl;
+    }
+    
+    int main(int argc, char **argv)
+    {
+        string blueBear = "Blue Bear"; // using the string class
+        string *ptrB = &amp;blueBear; // assigning a location to a pointer
+    
+        // using a character array hold a command line argument.
+        char *bearEats = argv[1]; 
+
+        // passing the pointer as an argument
+        bearSpeaks(bearEats);
+    
+    }
+
+
+</code></pre>
+<p>References:</p>
+<p>Ritchie, Dennis.(2003). The Development of the C Language <br />&emsp;https://www.bell-labs.com/usr/dmr/www/chist.html</p>
+<p>Backman, Kjell. (2012). Structured Programming with C++</p>
+<p>Quora (2020). What makes C++ so fast? Answer by David Vandervoode <br />&emsp; https://www.quora.com/What-makes-C++-code-run-so-fast?share=1</p>
+<p>Quora (2021). Apart from C and C++ what other languages use pointers? Answer by Aaron Christiansen <br />&emsp; https://www.quora.com/Apart-from-C-and-C++-in-what-other-languages-are-pointers-used?share=1</p>

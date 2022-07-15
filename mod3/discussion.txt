@@ -1,0 +1,40 @@
+In this module, we will explore working with pointers in the C++ programming language.
+
+ How are pointers used with arrays, and what are the benefits to utilizing pointers? Are arrays necessary when using a pointer? Additionally, what is the difference between the address-of operator and the dereference operator in C++? Be sure to provide an appropriate example to illustrate your viewpoints
+
+
+
+Pointers in C++ are a variable type that store a location in memory, (also called an address. And also called a reference). We can think of pointers as maps to a physical location. Instead of an actual map the address will be a hexadecimal number.
+
+ Pointers in C++ have two available operations: they can point to a location (reference a location) and they can grab the value at that location (de-reference the location). 
+ 
+ Among the benefits of using pointers are more efficient code, faster execution and memory savings (Backman, Kjell). We can pass pointers to objects, instead of copies of objects, which reduces both space and time complexity. We can immediately delete those values when we are done with them,   and this helps make the code fast. Even today you hear developers talk about how fast the C languages are. In part this is due to the ability to manage memory efficiently, through pointers. It's also due to the relatively low level of the language, and it's relatively small size (see Quora reference below).
+
+In C++ arrays are pointers by default.
+
+ 
+ 
+ 
+ If these terms seem confusing, you are not alone, as the following quote suggests
+
+ "
+
+ 
+ 
+ 
+ In natural language,the words "referencing" and "de-referencing" are verbs. In C++ (and other languages that use pointers) these words can be used as nouns, as in 
+
+- referencing, designated with the & symbol, and
+- de-referencing, designated with the * symbol.
+
+While some readings describe reference variables and pointer variables as two different objects, I think it is more accurate to describe pointers as having the two different operations, * and &.
+
+
+
+Pointers store addresses and nothing else. Pointers do not hold values. For example the following is not allowed in C++:
+
+References:
+Backman, Kjell. (2012). Structured Programming with C++.
+
+Quora (2020). What makes C++ so fast? Answer by David Vandervoode
+https://www.quora.com/What-makes-C++-code-run-so-fast?share=1

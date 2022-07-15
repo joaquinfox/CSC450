@@ -1,0 +1,37 @@
+zSoftware Engineering Institute
+SEI Cert C+ Coding Standars
+- ?undefined behaviors/undefined programs
+- ? difference between safety and reliability and secure? are these just redundant terms?
+- ? why are we studying C++ ?
+1.5
+- structured programming
+    - top down
+    - not reusable
+    - focusses on instructions, not data structures
+- OO is bottom up
+    - modular
+        -  information hiding
+        - data is hidden inside of modules and subroutines are provided to interact with that data
+    - objects are modules
+        - containe data and subroutines
+        - a self sufficient entity with internal state
+        - responds to messages/ calls to its subroutines
+        - begin by identifying objects
+    - polymorphism
+        - different objects can respond to the same message in different ways
+        
+
+The square bracket
+operator is not range-checked and thus reading from or writing to an out-of-bounds index
+tends to produce difficult-to-track-down errors.
+https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1132/handouts/08-C++-Strings.pdf
+
+
+POINTERS & REFERENCES
+- pointers: a variable that holds a memory address of another variable
+    - *p
+- references: an alias or another name for an existing variable.
+    can be thought of as a constant pointer. References are implemented internally as pointers.
+
+both references and pointers store the name of an existing object.
+

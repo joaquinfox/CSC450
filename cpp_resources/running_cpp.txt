@@ -1,0 +1,11 @@
+https://code.visualstudio.com/docs/cpp/config-linux
+
+- make a folder with the file name (
+- create a file ending in .cpp
+- add source code to it
+- build: 
+    - create a tasks.json file (tells IDE how to buile ??) invokes g++ compiler to reate an executable file
+    - Terminal > Configure Default build Task > C/C++:g++ build active file
+    - FROM THE ACTIVE SCREEN: Terminal > Run Build Task or Ctrl+Shift+B
+    - in a new terminal run ./filename (no extension)
+

@@ -1,0 +1,9 @@
+Option #1: String Input Console Application and Program Analysis
+Demonstrate an understanding of basic C++ programming concepts by completing the following:
+
+Program: Create a simple C++ console application that will write a program that will take string input from a user.  Your program should reverse the string and then print the output to the screen. Take input from the user 3 times for varying string lengths.
+Program Analysis: Given your program implementation, discuss and identify the possible vulnerabilities that may exist. If present, discuss solutions to minimize the vulnerabilities. Then discuss and identify possible problems that can result in errors for string manipulation of data. Your program analysis should be 1-2 pages in length.
+Submit the following components:
+
+Word document with appropriate screenshots of your program executing, program analysis responses, and source code in the Word file.
+Submit your .cpp source code file(s).  If more than 1 file, submit a zip file

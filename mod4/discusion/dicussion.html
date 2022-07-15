@@ -1,0 +1,52 @@
+<p>
+    what is the difference between ifstream and fstream and ofstream?
+
+These are the three basic I/O classes that relate to files in C++.If we want to perform some operation to files we would instantiate fstream along with the stream object we wanted. For example to create and write files we could write: <code style="color:black">#include fstream, iostream</code> in the header. This will give us acces to the methods of iostream so that we can use outf to touch and write a file.
+<pre><code>
+    #include <fstream>
+    #include <iostream>
+        
+        using namespace std;
+        
+        int main()
+        {
+            ofstream outf("testFoo.txt");
+        
+        
+            outf << "Eat more cheetoz."
+                 << "\n";
+            outf << "Cheetoz are delicious."
+                 << "\n";
+            return 0;
+        }
+</code></pre>
+<p>Just as outf allows us to write to a file, inf allows us to read from a file.
+    <pre><code>
+        #include <fstream>
+        #include <iostream>
+        #include <string>
+            
+            using namespace std;
+            
+            int main()
+            {
+                ifstream inf{"testFoo.txt"};
+            
+                while (inf)
+                { // As long as there is something in the file, keep reading.
+                    string strInput;
+                    getline(inf, strInput);
+            
+                    cout << strInput << "\n";
+                }
+            
+                return 0;
+            }
+
+    </code></pre>
+</p>
+<p>These filestream objects have unique security implications. One is that they are not disposed of immediately when a calling file closes. Instead they are <em>buffered</em> or held for batching. When the file closses normally, the buffered contents are written to disk and persisted. 
+If a program crashes suddenly these buffered filestreams are never written to disk, and the data is lost. </p>
+
+<p>Reference:</p>
+<p>Learn C++. 4/15/22. Basic File IO <br>&emsp;https://www.learncpp.com/cpp-tutorial/basic-file-io/</p>

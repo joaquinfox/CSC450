@@ -1,0 +1,165 @@
+<p>
+  There are subjects we study that only make sense in the context of really big
+  numbers, or lots and lots of steps. Concurrency is one of them. Our operating
+  systems and our applications do things concurrently all of the time. This
+  isn't something we actively need to manage. But there are situations where it
+  is useful to intervene directly and take control of how our application
+  allocate CPU.
+</p>
+<p>
+  In the same way that C++ gives us tools to meddle with memory, it gives us
+  tools to control concurency. Just as memory management poses a set of security
+  concerns, so does concurency management. But before talking about
+  vulnerabilities, I think it makes sense to understand how concurrency control
+  is achieved in C++. I found this to be complicated stuff and it cost me some
+  effort to understand these mechanisms. I am going to summarize what I've
+  learned here. Most of my current understanding comes from a really good
+  tutorial by Ari Saif, referenced below.
+</p>
+<p>Computers are good at summing. So let me sum a billion (1,000,000,000) elements. I'll use an unsigned long long type to hold the sum.
+<pre>
+    <code>
+
+        #include <iostream>
+            void AddRealBigNum(uint64_t &sum, uint64_t start, uint64_t end)
+            {
+                sum = 0;
+                for (uint64_t i = start; i < end; i++)
+                {
+                    sum += i;
+                }
+                printf("%ld", sum);
+            }
+            
+            int main()
+            {
+                uint64_t sum, start = 0, end = (1000 * 1000 * 1000);
+                AddRealBigNum(sum, start, end);
+            }
+
+    </code>
+</pre>
+</p>
+<p>Run the above and after about 2 seconds it spits out an answer: <code style="color:black">499999999500000000</code></p>
+<p>I can speed this up using concurency. The general idea is to split the task of adding numbers into smaller tasks, and have those smaller tasks run on separate threads. Once the threads execute, I can sum the partial sums of the threads... Let me start with two threads, and a vector to hold the partial results. I'm also going to use an integer "bucket" to spread the elements between the two threads. </p>
+<p>Here is my vector: <br>
+    <code style="color:black">
+        std::vector<uint64_t> partial_sums(2);
+
+    </code> <br>
+    ... and here I add two threads. The threads execute immediately and have to be followed by the <code style="color:black">joing()</code> in order to prevent a core dump. 
+    <pre>
+        <code>
+            #include <iostream>
+                #include <vector>
+                #include <thread>
+                
+                void AddRealBigNum(uint64_t &sum, uint64_t start, uint64_t end)
+                {
+                    sum = 0;
+                    for (uint64_t i = start; i < end; i++)
+                    {
+                        sum += i;
+                    }
+                    printf("%ld\n", sum);
+                }
+                
+                int main()
+                {
+                    int number_of_elements = 1000 * 1000 * 1000; // how many things to count
+                    int bucket_size = number_of_elements / 2;    // how many things go in each thread
+                
+                    uint64_t sum, start = 0;
+                
+                
+                    std::vector<uint64_t> partial_sums(2);
+                
+                    std::thread t1(AddRealBigNum, std::ref(partial_sums[0]), 0, bucket_size);
+                
+                    std::thread t2(AddRealBigNum, std::ref(partial_sums[1]), bucket_size, 2 * bucket_size);
+                
+                    t1.join(); 
+                    t2.join();
+                }
+    
+    
+        </code>
+    </pre>
+
+
+</p>
+<p> A couple things  to point out here: First, it took me some effort to compile this without breaking. I learned that running threads  is a squirly process (reminded me of getting JavaFX to work, not at all straightforward). In the end, what worked for me was to run the build directly from my CL with the line  <code style="color:black">++ test.cpp -o test -lpthread</code>. Hopefully you will have less trouble.
+</p>
+<p>A second thing to point out is how I pass the vector to the thread, with the line <br>
+    <code style="color:black">std::ref(partial_sums[0])</code> <br>
+    as the first argument for AddRealBigNum. I guess passing a reference to a thread is more involved than just writing "&". This is not intuitive or obvious and so I highlight it here.
+</p> 
+<p>Run the above and your will get <br>
+    374999999750000000
+    124999999750000000 <br>
+    To add these is a little tricky because the thread objects are hard to work with. You can't just add threads (I don't think). Instead I will use a method of the numeric library, <code style="color:black">accumulate</code> together with new variable to hold the sum. With a little re-arranging, the whole thing  looks like this: <br>
+    <pre>
+        <code>
+            #include <iostream>
+                #include <vector>
+                #include <thread>
+                #include <numeric>
+                
+                void AddRealBigNum(uint64_t &sum, uint64_t start, uint64_t end)
+                {
+                    sum = 0;
+                    for (uint64_t i = start; i < end; i++)
+                    {
+                        sum += i;
+                    }
+                }
+                
+                int main()
+                {
+                    int number_of_elements = 1000 * 1000 * 1000; // how many things to count
+                    int bucket_size = number_of_elements / 2;    // how many things go in each thread
+                
+                    uint64_t sum, start = 0;
+                
+                    std::vector<uint64_t> partial_sums(2);
+                
+                    std::thread t1(AddRealBigNum, std::ref(partial_sums[0]), 0, bucket_size);
+                
+                    std::thread t2(AddRealBigNum, std::ref(partial_sums[1]), bucket_size, 2 * bucket_size);
+                
+                    t1.join(); // without these, it won't work
+                    t2.join();
+                
+                    uint64_t total =
+                     std::accumulate(partial_sums.begin(), partial_sums.end(), uint64_t(0));
+                
+                     printf("\n%ld\n", total);
+                }
+    
+        </code>
+    </pre>
+
+</p>
+<p> The output is <br>
+    499999999500000000 <br>
+    You can see how this method can be extended to any number of threads (although I suppose there are diminishing returns at some point). Ok, now onto vulnerabilities.
+</p>
+<p>The above demo is very simplified, as far as thread operations go. But (I take it) that working with threads can get very complicated in the real world. There can be sequenginc of threads and interdependencies between them, so that one threads execution may rely on, or be impacted by, the output of another thread. The whole thing can seem like a train wreck waiting to happen. On top of that, there is an entire suite of methods and libraries that go into concurrency management, and we haven't really had a proper introductino to any of them. When I talk about these things, keep in mind that I don't hava any real world experience with this stuff and it all seems very abstract. I imagine concurency management to be a bit like traffic engineering in a big city, where you want to keep traffic flowing with a minimum number of wrecks and traffic jams.</p> 
+<p>
+Broadly speaking issues we run into when managing concurrent processes can be of two types: <br>
+    -  when different threads compete for the same resource (for example, if in my code example, I had each thread counting overlaping fields). <br>
+    - <em>flow related</em>. These include <em>deadlocks, interdependencies between threads, improper sequencing, stoping thread execution in the wrong place, not stoping thread executio in the right place and... well. You get the picture.  </em>, 
+</p>
+<p>In general best practices of the SEI CERT revolve around correctly defining boundaries and sequences for thread execution, which is something I imagine comes with practice.</p>
+<p>References</p>
+<p>
+  Ari Saif. March 2020. <em>Learn C++ Multi Threading in 20 minutes</em> <br />
+  &emsp;https://www.youtube.com/watch?v=3aqxaZsvn80&ab_channel=arisaif
+</p>
+<p>
+    LinkedInLearning (April 2018) Bill Weinman.  
+    <em>C++; Advanced Topics</em> <br />&emsp;
+    https://www.linkedin.com/learning/c-plus-plus-advanced-topics/why-non-stl-strings?autoplay=true&contextUrn=urn%3Ali%3AlearningCollection%3A6903920787414220800&u=2245842
+  </p>
+
+

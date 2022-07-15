@@ -1,0 +1,35 @@
+Javanotes
+black box (encapsulation, abstraction)
+chunking
+
+subroutines
+	- rule: you can run a subroutine without knowing how it works
+	
+	
+Java Observability TOolkit JOT
+	
+	
+	Java packages - you don't want circular dependencies between classes
+	reducing cyclic dependencies reduces security vulnerabitlites
+	
+Dependency Injection
+ class dependencies: when a class needs another class	
+ 
+ classes should be as independent as possible
+ 	- that way they are more useful and easier to test
+ 	- if the new operator is used in a class. it is not independent
+	- this is called "avoiding object creation"
+	
+	so DI is an alternative to new
+	DI on
+		- constructor
+		- field
+		- parameters
+		
+	but nothing static
+	
+	DI leads to 
+		- loose coupling architecture 
+		- you can test?
+		
+		

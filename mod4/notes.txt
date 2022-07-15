@@ -1,0 +1,27 @@
+Module 4: Discussion Forum
+
+In creating C++ applications, you have the ability to utilize various formatting functions in the iostream library.  What are some of the formatting vulnerabilities that can be encountered in using the iostream library in C++?  What tips can be utilized to identify these vulnerabilities?  Be sure to provide an appropriate source code example to illustrate your points.
+
+The IOStream library is C++'s way of formatting input and output to a variety of sources susch as the console, files, or string buffers.
+
+Has a bunch of manipulators <iomanip>
+
+One thing I have been unclear about up untill this module, is that the IOStream library in C++ has more functionality than we get just by importing the <iostream> module. That include gives us only a subset of the methods available in the larger IOStream library, namely cout and cin. Other cool stuff availbale includes:
+- stream minipulators, accessed with <iomanip>
+    - endl;
+    - boolalpha;
+    - setw(n);
+    - hex, dec, oct
+        cout<<dec<<10<<endl;
+    - ws (skips whitespace);
+
+    Error states: end-of-file, fail state, bad state.
+    
+
+    boby boop
+    2.5
+    sumking burger 
+    8.4
+    mary bellyboosd
+    5.78
+    

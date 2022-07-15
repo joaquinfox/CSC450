@@ -1,0 +1,108 @@
+<p>
+  A variable is a label on a piece of memory. When I declare int myCookies = 10,
+  I am telling my application to go and find an area of free memory large enough
+  to hold an integer, and label it "myCookies". It is like a cookie jar, in a
+  cabinet, with a label on the outside. The <em>scope</em> of that variable
+  defines the positions from which I can open that cookie jar. If the jar sits
+  in a cabinet in an office on the third floor, then I can't open it from the
+  lobby. Or the cafeteria. The variable myCookies would be "out of scope" in
+  these contexts. And this is a good thing. If the cabinet sat in the lobby, it
+  would have "global" scope, and that would mean that pretty much anybody
+  walking through the lobby could reach in and take my cookies.
+</p>
+<p>
+  When thinking about the security implications of scope it helps me to keep in
+  mind the broad definition of "security" as not only concerned with bad actors,
+  but also, with performance more generally. An app that crashes and looses data
+  or interrupts a process is insecure, just as an app that exposes sensitive
+  data is insecure, but they are insecure in different ways. 
+</p>
+<p>
+  It helps me to group these issues into two categories I call "break stuff" or performance related, and "steal stuff" or access related. Scope can affect both.
+</p>
+<p>
+  Isues around access seem pretty straight forward. Declare a class public and
+  you put the cookie jar in the lobby. You surrender control over the state of
+  that data and open the door to side effects and unpredicted behaviours. Use
+  access modifiers private and protected to restrict class access, and you regain (some) control over state and behavior. Guidline 24, "Minimize accesability of clases and their members" relates to this idea.
+</p>
+<p>Guidline 22, "Minimize the scope of variables" tells us to tightly couple variable declarations and initializations. This is a guidline I see violated constantly, even in course materials such as our ZyLab curriculum from earlier classes. Here is an example that maps user inputs to a predefined list of integers: </p>
+<pre><code>
+public class test {
+    public static <MapType extends Comparable<MapType>>
+       MapType getMapping(MapType mapMe, MapType [] mappings) {
+       MapType result;
+       int i;
+       int len;
+       boolean keepLooking;
+ 
+       result = mapMe;
+       len = mappings.length;
+       keepLooking = true;
+ 
+       System.out.println();
+       System.out.print("Mapping range: ");
+       for (i = 0; i < len; ++i) {
+          System.out.print(mappings[i] + "  ");
+       } 
+       System.out.println();
+       
+       i = 0;      // Restart counting
+       while ((i < len) && keepLooking) {
+          if (mapMe.compareTo(mappings[i]) <= 0) {
+             result = mappings[i];
+             keepLooking = false;
+          }
+          else {
+             ++i;
+          } 
+       } 
+       System.out.println(mapMe + " is mapped to " + result);
+ 
+       return result;
+    } 
+</code></pre>
+<p> The issue here is that when variable declarations are separated from initializations it makes it harder for the JVM to garbage collect them. I rewrite the getMapping() method below to make it compliant with guideline 22.</p>
+<pre><code>
+    getMapping(MapType mapMe, MapType[] mappings) {
+        MapType result = mapMe;
+
+        int len = mappings.length;
+        boolean keepLooking;
+
+        len = mappings.length;
+        keepLooking = true;
+
+        System.out.println();
+        System.out.print("Mapping range: ");
+        for (int i = 0; i < len; ++i) {
+            System.out.print(mappings[i] + "  ");
+        }
+        System.out.println();
+
+        int x = 0; // Restart counting
+        while ((x < len) && keepLooking) {
+            if (mapMe.compareTo(mappings[x]) <= 0) {
+                result = mappings[x];
+                keepLooking = false;
+            } else {
+                ++x;
+            }
+        }
+        System.out.println(mapMe + " is mapped to " + result);
+
+        return result;
+    }
+
+</code></pre>
+<p>References</p>
+<p>Java.Docs. (Accessed 4.25.2022) <em>Security Overview</em>
+&emsp; https://docs.oracle.com/javase/8/docs/technotes/guides/security/overview/jsoverview.html</p>
+<p>GeeksForGeeks. 5.2.2022. <em>Scope of variables in Java</em>. <br>
+&emsp;https://www.geeksforgeeks.org/variable-scope-in-java/</p>
+
+<p>Long, Fred et al.  (2014) <em>Java Coding Guidlines</em>. Chapter 2.
+
+<pre><code>
+  @SuppressWarnings(cast”)
+</code></pre>

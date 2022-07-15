@@ -1,0 +1,45 @@
+Mod 3
+
+Reasong to use exceptions with C++
+- C++ exceptions force the calling code to identify error conditions and handle them. This   	prevents them from stopping program execution.
+	https://rollbar.com/blog/error-exceptions-in-c/
+- C++ destorys all objects in scope after an exception occurs, therebye reducing resource usage.
+
+- an exception provides a clean separation between the code that identifies an error and the code that throws and handles the C++ error. // why is this a good thing?
+
+ - exceptions can be grouped and categorized
+ 
+ - the "throw" keyword allows custom definitions of exceptions
+ 
+ - 
+
+
+i just had the realizatioin that try-catch exception handling in C++ is central to the language and is HOW one is supposed to handle the inherit vulnerabilites that come from pointer/string issues.
+
+
+programming for a GPU is hard
+GPU from gaming getting more use so need programming ability
+different architecture and "conceptual differences in the programming model" things don't work the same as for CPU programming
+
+Array Of Structures AOS - fields of a struct are stored together.
+
+Structure Of Arrays SOA - all values of a field are stored together.
+
+&: address / reference
+*: indirection / de-reference, the pointer holds the reference
+
+& extracts an address
+* extracts the value stored at that address
+
+https://www.udacity.com/blog/2021/05/c-pass-by-reference-explained.html
+
+SEI CERT 9.7
+- core langauge facilities that throw exceptioins
+	- dynamic_cast
+	- new()
+	- typeid
+	
+pitgalls of exception handling
+	- failure to release a resource
+	- failure to reestablish a class invariant after a partial update.
+

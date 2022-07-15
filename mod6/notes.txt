@@ -1,0 +1,76 @@
+mod6
+
+Java security
+
+injection attacks
+	 SQL most common
+	 LDAP something with scripting?
+ 	 XSS uses javascript
+ 	 CRLF web applications
+ 	 
+ 	 
+ 	 Readings per syllabus
+ 	 	Secure coding practices in Java:
+			Challenges and vulnerabilities
+	Reading per IL
+		
+		
+		
+		
+		
+		 Java remedies some of the shortcomings of the C langauges, in ways I think we can all   
+		appreciate more fully now, having spent the past five weeks studying the vulnerabilites of C.
+		 Here are the key Java security features:
+		- automatic memory management helps protect against memory leaks, and reduces the code we have to write.
+		- range checks on array operations gives us a warning so we can fix the issue then and there.
+		- garbage collection periodically purges data that is out of scope, so it won't come back to haunt us later.
+		- access modifiers give us a way of encapsulating data and name spaces, with a simple, intuitive syntax.
+		- the Java compiler runs a bunch of checks for us, related to all the features above, and gives us helpful comments pointing us to the problem, if there is one.
+		From the Java docs:
+		"This reduces the overall programming burden placed on developers, leading to fewer subtle programming errors and to safer, more robust code."
+		
+		Java is gnerally safe when considered in isolation. However, I don't know of any real world applications that use Jave exclusively: modern apps pull in a lot of dependencies. Once we incorporate Java into a more complex architecture, we intorduce 
+		attack vectors, poking holes in our security layers. An IBM document about the Java SecurityMangaer class, which acts as a permission layer that allows or disallows calls to and from certain API's,  describes the situation this way :
+		"By default, Java™ applications have no security restrictions placed on activities requested of the Java API. To use Java security to protect a Java application from performing 
+		potentially unsafe actions, you can enable a security manager for the JVM in which the application runs."
+		
+	        The java SecurityManager class a
+
+		Each dependency and library and API call presents a new opportunity to break things. This is not special to Java, it is a feature of modern software generally, and of web applications 		in particular.
+		Java response to this situation, is what it calls implemtation independence. From the docs ...
+		
+		"Applications do not need to implement security themselves. Rather, they can request security services from the Java platform. Security services are implemented in providers, which are 			plugged into the Java platform via a standard interface."
+		This approach encapsulates security measures so that we users do not have to worry (too much) about it.
+		Several libraries support security in Java. These libraries provide security tools we can pull into a project. Many of these tools live in the java.security.Provider class.  These    
+		Provider methods mostly relate to encrypting data we handle. Another library java.lang.SecurityMangaer gives us control over the API's our app can talk to.
+		
+		Another apporach is to pull in a third party service like Spring, which offers good security enhancements (although the paper raises some questions about this). 	 
+		Spring seems to be a giant framework with it's own syntax and probably not the first thing I would reach for, although it sounds like any serious Java developer will 
+		need  to learn it at some point.
+		
+		The java.security class has many, many providers, but they can be grouped into a few categories. These security areas are:
+	
+		
+		Issues of data sensitivity surface when our application exchanges data with the outside world (which I think of as anything outside of our calling class). Operations that could expose a
+		vulnerability include
+		- encryption, hashing and key generation and transmission.
+		- authentication, to know users are who they say they are.
+		- secure communication for data travelling over any kind of a network (so that it can't be got at by the wrong party).
+		- authorization and permission tools let you control who can do what, and who can go where.
+		- and lot's of other things, many of which I do not understand.
+		
+		All the above issues can be addressed with a Provider. Here is an example
+		
+		COME UP WITH AN EXAMPLE
+		
+		
+		
+		
+		
+		
+		REFERENCES
+		Java Docs. https://docs.oracle.com/javase/8/docs/technotes/guides/security/overview/jsoverview.html
+		
+		java docs https://docs.oracle.com/cd/E13222_01/wls/docs81b/secmanage/java.html
+		
+		IBM docs https://www.ibm.com/docs/en/cics-ts/5.2?topic=applications-enabling-java-security-manager

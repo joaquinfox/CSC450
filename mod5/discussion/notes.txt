@@ -1,0 +1,15 @@
+There are  subjects we study that only make sense in the context of really big numbers, or lots and lots of steps. Concurrency is one of them. Our operating systems and our applications do things concurrently all of the time. This isn't something we actively need to manage. But there are situations where it is useful to intervene directly and take control of how our application allocate CPU.  
+
+In the same way that C++ gives us tools to  meddle with memory, it gives us tools to control concurency. Just as memory management poses a set of security concerns, so does concurency management. But before talking about vulnerabilities, I think it makes sense to understand how concurrency control is achieved in C++. I found this to be complicated stuff and it cost me some effort to understand these mechanisms. I am going to summarize what I've learned here. Most of my current understanding comes from a really good tutorial by Ari Saif, referenced below.
+
+Computers are good at summing. So let me sum a billion (1,000,000,000) elements. I'll use an unsigned long long type to hold the sum.
+
+
+
+notes:
+threads and tasks.
+
+multiple threads 
+
+
+we can break things The main tool for doing so is the thread library.  

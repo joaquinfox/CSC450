@@ -1,0 +1,77 @@
+<p>
+  Before answering this, I had to first understand the IOStream library better.
+  It turns out that when we include
+  <code style="color: black">iostream</code>
+  we <em>do not</em> include the full IOStream library, only a subset of that
+  library. What <code style="color: black">iostream</code>
+  gives us are the console operations<code
+    style="color: black"
+    > cout, cin </code
+  >and<code style="color: black"> cer</code>.
+</p>
+<p>
+  Other tools of the IOStream library have to be pulled into your code
+  separately. These include all the stream manipulators, accesed with
+  <code style="color: black">iomanip</code>. This package includes some of the most useful tools for formating output, such as
+  <ul>
+      <li>
+          Setting output buffer width with <code style="color: black">setw(2)</code>
+
+
+      </li>
+      <li>
+          Padding output with <code style="color: black">setfill("0")</code>
+
+
+      </li>
+      <li>
+          Setting output precision with <code style="color: black">precision(n)</code>
+
+
+      </li>
+      <li>
+Changing number bases with, for example: <pre>
+
+  <code style="color: black">cout<< hex<<7849568 </code>
+</pre>
+
+
+      </li>
+  
+  </ul>
+  File read - write methods are
+  accessed with<code style="color: black"> fstream </code> header. Here is a
+  diagram of the full architecture of the IOStream library which I found
+  helpful. At each level of the diagram, a given class will have the functoinality (methods) of the classes <em>above it</em>(the parent classes), and will also have the methods of <em>adjacent</em> classes, but it will not have the functionality of classes <em>lower down</em> on the inheritance chart.
+</p>
+<!-- insert image -->
+<p>
+ There are lots of vulnerabilities related to I/O, described in the SEI CERT. All of chapter 8 is dedicated to I/O issues and they come up in other chapters as well. I think we can  group all of these issues into two main areas 
+ by data <em>type</em> and data <em>length</em> mismatches.
+</p>
+<p>
+  With type mismatches we expect a certain input, say integers, but we get
+  another, say strings. For example If I ask for an age and expect it as an integer ...
+</p>
+<pre><code>
+  int age;
+  cout<<"Enter your age:";
+  cin>> age;
+</code></pre>
+<p>... but a user inputs a string <code style="color: black">"Older n dirt"</code>, the stream enters a fail state which breaks the stream and shuts down so that any furthuer call to <code style="color: black">cin</code> will fail as well.
+ </p>
+<p>Another failure category is related to the size of data, and this forms the core of the integer overflow problems affectig ethereum smart contracts(citation). I don't understand how these contracts, or ethereum work, but apparently they use integers to encode data, and since int has a finite size (in any language), it is easy to break an integer and lose data. Here is an example of an integer overflow in C++. </p>
+<pre><code>
+  int mySecretNumber = 2147483647;
+  cout << mySecretNumber * 2;
+  // Output: -2
+</code></pre>
+<p>The good news is all of these conditions are known and can be defended against. Methods at our disposal include validating inputs before using them in a process, and wrapping critical code in a <code style="color: black">try - catch</code> to catch and handle any exceptions that surface.
+</p>
+
+
+<p>References:</p>
+<p>Stanford University Class Archives.(2008). Handout for CS106. <br>
+  &emsp;https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1084/cs106l/handouts/030_Cpp_Streams.pdf</p>
+  <p>Lai, Enmei & Luo, Wenjun. (2020). <em>Static Analysis of Integer Overflow of Smart COntract in Ethereum.</em>
+  </p>

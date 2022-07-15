@@ -1,0 +1,51 @@
+Null pointer vulnerabilites
+- pointers point to a location in memory.
+- when a pointer obtains an address it is "dereferenced"
+- when a pointer is de-referenced on a null value, its no bueno
+- NULL pointer dereference error (pointing to a null value)
+
+
+we can get the memory address of a variable by using the & operator:
+
+A pointer however, is a variable that stores the memory address as its value.
+
+string food = "Pizza";  // A food variable of type string
+string* ptr = &food;    // A pointer variable, with the name ptr, that stores the address of food
+
+// Output the value of food (Pizza)
+cout << food << "\n";
+
+// Output the memory address of food (0x6dfed4)
+cout << &food << "\n";
+
+// Output the memory address of food with the pointer (0x6dfed4)
+cout << ptr << "\n";
+
+PROCESS MEMORY ORGANIZATION
+- code
+- data
+- heap
+- stack segments
+
+STACK SMASHING
+ when a buffer overflow overwrites something
+ - that overflow is in the wild and it can be read and written to, so if it has something like a password, it can overwrite that deliberately.
+ - or just screw things up
+
+ CODE INJECTION
+ - a return address (to the calling function) can be seen and over written during a buffer overflow. 
+ - it can be written to nonsense in which case the program just crashes
+ - but it can also be pointed to some malicious code    
+    - that code can open a remote shell through which an attacker can access ... stuff.
+
+ARC INJECTION
+- instead of injecting new code, this attack overwrites the return address to some other written function in the system, circumventing whatever was in between.
+
+RETURN ORIENTED
+In this attack, the overflow area is written with a gadget
+
+in C++ (p.80)
+- basic_string manages memory so the caller does not have to worry about ut
+- basic_string allocates memory dybamically
+- buffers are allways automatically sized
+- o truncation or overflow

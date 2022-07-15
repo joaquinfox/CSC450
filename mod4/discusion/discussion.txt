@@ -1,0 +1,3 @@
+what is the difference between ifstream and fstream and ofstream?
+
+These are the three basic I/O classes that relate to files in C++.If we want to perform some operation to files we would instantiate <fstream> along with the stream object we wanted. For example to create and write files we would  

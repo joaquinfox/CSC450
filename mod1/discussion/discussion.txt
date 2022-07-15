@@ -1,0 +1,31 @@
+I am using VSCODE as my text editor for this, and all of my CSC classes so far. I was already familiar with VSCODE, and it seems able to give me all features I need to write in C++ and Java. One distinguishing feature of VSCODE is that it is command line based, as opposed to Eclipse with it's GUI interface.
+
+From Peggy Fisher's video (C++ Essential Training for Career Changers), C++ has the same menu of data types we have used in Java, that is, strings, characters, boolean, and number types for integers and rational values of various precisions and lengths. In addition C++ uses pointer and reference types, which is not something we had to work with in Java, but I gather are used to manually allocate and de-allocate memory, (which is something the Java Virtual Machine does for us). For more on pointers and their use see Pointers in C++ with Examples (GeeksForGeeks).
+
+Similar to Java, C++ has the concept of primitive data types (integers, characters, booleans, floating points, double floats, void and wide chars), as well as a concept of derived data types (which sound to me a bit like collections of primitive types, for example, an array). In C++ the concept of abstract data types seems to have a somewhat different meaning than it does in Java. For those of us who took CSC400, the phrase abstract data type brings to mind things like bags, stacks, queues, and heaps. In C++ the term seems to refer to anything user defined, such as a class.
+
+I am not clear on the relationship of data types and security, beyond the basic idea that if a data type is compromised it's value can be altered and that can be used to do bad things. But the mechanics of how this can happen is very unclear to me. Hopefully one of you can better explain this.
+
+As with Java, C++ is flexible as to how we declare and initalize variable types. Here are some examples:
+
+bool quit = false;
+int age {48};
+string foo = "Eat beans";
+char code = 'X';
+double rate = 0.05;
+
+C++ has the ability to infer data types, and this seems like a useful semantic tool. To have C++ infer a data type we use the keyword auto. The two variable declarations will be compiled as an integer in the first case, and as a double in the second.
+
+auto numA {10};
+auto numB {10.0};
+
+In the same video refernced above, vectors and arrays are described as additional data types in C++, although I am used to thinking of these as data structures that contain data.
+
+References:
+Stack Overflow (February, 2015) How can I use pointers in Java?https://stackoverflow.com/questions/1750106/how-can-i-use-pointers-in-java
+
+LinkedInLearning (April 2017) Peggy Fisher. C++ Essential Training for Career Changers
+https://www.linkedin.com/learning/c-plus-plus-essential-training-for-career-changers/c-plus-plus-data-types?autoplay=true&resume=false&u=2245842
+
+GeeksForGeeks (January, 2022) C++ Data Types
+https://www.geeksforgeeks.org/c-data-types/

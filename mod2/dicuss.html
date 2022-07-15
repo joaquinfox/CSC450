@@ -1,0 +1,24 @@
+<p>This question sent me researching and I think I have an answer.</p>
+<p>When a pointer is left pointing to a non-existent value, it becomes a dangling pointer. This is a pointer that points to nothing, and it can grab onto random areas of memory, including areas where the OS is written. If that same pointer is then written to, we can overwrite whatever was there, including pieces of our OS.</p>
+<p>Dangling pointers come about under several circumstances, such as declaring a pointer, and initializing it in different scopes, in C ...</p>
+<pre><code>
+    int *ptr;
+    {
+        int foo = 85;
+        ptr = &foo;
+    }
+</code></pre>
+<p>It can also come about when the object a pointer pointed to is destroyed.</p>
+<pre><code>
+    char *ptr1, *ptr2;
+    char demo1 = '$';
+    ptr1 = &demo1;
+    ptr2 = ptr1;
+
+    delete ptr1;
+
+</code></pre>
+<p>My compiler actually gives me some protection from this. Am I in the ballpark? Thanks for the question</p>
+<p>Reference</p>
+<p>Cybersecurity & Infrascturcture Security Agency. (Accessed 3/29/22)<br>&emsp;https://www.cisa.gov/uscert/bsi/articles/knowledge/coding-practices/null-pointers</p>
+<p>Gungor Murat. (8/29/19). Dangline pointers in C++<br>&emsp;https://dzone.com/articles/dangling-pointer-in-c</p>

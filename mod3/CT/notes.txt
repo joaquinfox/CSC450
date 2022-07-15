@@ -1,0 +1,12 @@
+Option #1: Integer Pointers Program and Analysis
+Demonstrate an understanding of basic C++ programming concepts by completing the following:
+
+Program: Create a C++ program that asks the user to enter three integer values as input.  Store the values into three different variables. For each variable, create an integer pointer to dynamic memory. Display the contents of the variables and pointers.  In your program, be sure to use the new operator and delete operators to management memory.
+Program Analysis: Given your program implementation, discuss and identify the possible security vulnerabilities that may exist. If present, discuss solutions to minimize the vulnerabilities. Discuss and identify possible problems that can result in errors when using integer pointers. Your analysis should be 1-2 pages in length.
+Submit the following components:
+
+Word document with appropriate screenshots of your program executing, program analysis responses, and source code in the Word file.
+Submit your .cpp source code file(s).  If more than 1 file, submit a zip file.
+
+
+pasing by value inherently safe.
